@@ -1,1 +1,3 @@
-<Solution />
+<Solution>
+  <Project Path="FlightManagementSystem/FlightManagementSystem.csproj" />
+</Solution>
