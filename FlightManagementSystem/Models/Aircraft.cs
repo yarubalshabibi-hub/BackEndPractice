@@ -4,11 +4,7 @@ using System.Text;
 
 namespace FlightManagementSystem.Models
 {
-    internal class Aircraft
-    {
-    }
-}
-    class Aircraft
+    public class Aircraft
     {
         public int AircraftId { get; set; }
         public string Model { get; set; }
@@ -20,7 +16,7 @@ namespace FlightManagementSystem.Models
             AircraftId = aircraftId;
             Model = model;
             TotalSeats = totalSeats;
-            IsOperational = true;   
+            IsOperational = true;
         }
 
         public void Display()
@@ -29,4 +25,5 @@ namespace FlightManagementSystem.Models
             Console.WriteLine($"  ID: {AircraftId} | Model: {Model} | Seats: {TotalSeats} | Status: {status}");
         }
     }
+}
 
