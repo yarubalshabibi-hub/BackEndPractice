@@ -1,6 +1,10 @@
-﻿namespace FMS.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace FlightManagementSystem.Models
 {
-    class Pilot
+    public class Pilot
     {
         public int PilotId { get; set; }
         public string PilotName { get; set; }
