@@ -1,6 +1,10 @@
-﻿namespace FMS.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace FlightManagementSystem.Models
 {
-    class Passenger
+    public class Passenger
     {
         public int PassengerId { get; set; }
         public string PassengerName { get; set; }
