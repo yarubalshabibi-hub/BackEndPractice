@@ -52,32 +52,40 @@ namespace FlightManagementSystem
                         AddAircraft();
                         break;
 
-                    case "3": 
+                    case "3":
+                        RegisterPilot();
                          break;
 
-                    case "4": 
+                    case "4":
+                        ViewAllFlights();
                         break;
 
-                    case "5": 
+                    case "5": ScheduleFlight();
                         break;
 
-                    case "6": 
+                    case "6":
+                        BookFlight();
+                        break;
+
+                    case "7":
+                        CancelBooking();
                          break;
 
-                    case "7": 
-                         break;
-
-                    case "8": 
+                    case "8":
+                        DepartFlight();
                          break;
 
                     case "9":
+                        CancelFlight();
                          break;
 
-                    case "10": 
+                    case "10":
+                        PassengerHistory();
                          break;
 
                     case "11":
-                        break;
+                        RevenueReport();
+                         break;
 
                     case "0":
                         running = false; Console.WriteLine("Goodbye!");
@@ -140,6 +148,74 @@ namespace FlightManagementSystem
 
                     Console.WriteLine($" Aircraft added! Assigned ID: {newId} | Model: {model} | Seats: {seats} | Status: Operational");
                 }
+
+                static void RegisterPilot()
+                {
+                    Console.WriteLine("Register a Pilot: ");
+
+                    Console.Write("Enter pilot full name: ");
+                    string name = Console.ReadLine().Trim();
+
+                    Console.Write("Enter phone: ");
+                    string phone = Console.ReadLine().Trim();
+
+                    Console.Write("Enter license number: ");
+                    string license = Console.ReadLine().Trim();
+
+                    // License must be unique
+                    if (context.Pilots.Any(p => p.LicenseNumber == license))
+                    {
+                        Console.WriteLine("Error: A pilot with this license number already exists.");
+                        return;
+                    }
+
+                    int newId = context.Pilots.Count + 1;
+                    context.Pilots.Add(new Pilot(newId, name, phone, license));
+
+                    Console.WriteLine($" Pilot registered! Assigned ID: {newId}");
+                }
+
+                static void ViewAllFlights()
+                {
+
+                }
+
+                static void ScheduleFlight()
+                {
+
+                }
+
+                static void BookFlight()
+                {
+
+                }
+
+                static void CancelBooking()
+                {
+
+                }
+
+                static void DepartFlight()
+                {
+
+                }
+
+                static void CancelFlight()
+                {
+
+                }
+
+                static void PassengerHistory()
+                {
+
+                }
+
+                static void RevenueReport()
+                {
+
+                }
+
+               
             }
         }
     }
