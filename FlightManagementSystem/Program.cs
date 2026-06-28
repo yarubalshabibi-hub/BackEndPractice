@@ -61,23 +61,23 @@ namespace FlightManagementSystem
                         break; //Done
 
                     case "5": ScheduleFlight();
-                        break;
+                        break;  //Done
 
                     case "6":
                         BookFlight();
-                        break;
+                        break;  //Done
 
                     case "7":
                         CancelBooking();
-                         break;
+                         break;  //Done
 
                     case "8":
                         DepartFlight();
-                         break;
+                         break;  //Done
 
                     case "9":
                         CancelFlight();
-                         break;
+                         break;  //Done
 
                     case "10":
                         PassengerHistory();
@@ -277,7 +277,7 @@ namespace FlightManagementSystem
                     pilot.IsAvailable = false;
 
                     Console.WriteLine($"Flight scheduled! Code: {flightCode} | {origin} → {destination} | {date} {time} | Duration: {flightDuration}h | Seats: {aircraft.TotalSeats}");
-                }//Done
+                }  //Done
 
                 static void BookFlight()
                 {
@@ -348,7 +348,7 @@ namespace FlightManagementSystem
                     flight.AvailableSeats--;
 
                     Console.WriteLine($"Booking confirmed! BookingID: {newId} | Seat: {seatLabel} | Price: OMR {flight.TicketPrice:F2}");
-                }
+                }  //Done 
 
                 static void CancelBooking()
                 {
@@ -387,12 +387,52 @@ namespace FlightManagementSystem
                     if (flight != null) flight.AvailableSeats++;
 
                     Console.WriteLine($"Booking {bookingId} cancelled! Seat returned to flight.");
-                }
+                }  //Done
 
                 static void DepartFlight()
                 {
 
-                }
+                    Console.WriteLine("Depart a Flight: ");
+
+                    // Show scheduled flights only
+                    var scheduled = context.Flights.Where(f => f.Status == "Scheduled").ToList();
+                    if (scheduled.Count == 0)
+                    {
+                        Console.WriteLine("No scheduled flights available.");
+                        return;
+                    }
+                    Console.WriteLine("Scheduled Flights:");
+                    scheduled.ForEach(f => f.Display());
+
+                    int flightId;
+                    while (true)
+                    {
+                        Console.Write("Enter Flight ID to depart: ");
+                        if (int.TryParse(Console.ReadLine(), out flightId)) break;
+                    }
+
+                    Flight flight = context.Flights.FirstOrDefault(f => f.FlightId == flightId && f.Status == "Scheduled");
+                    if (flight == null)
+                    {
+                        Console.WriteLine("Error: Flight not found or not in Scheduled status.");
+                        return;
+                    }
+
+                    // Update flight status
+                    flight.Status = "Departed";
+
+                    // Update pilot hours using FlightDuration stored in the flight object
+                    Pilot pilot = context.Pilots.FirstOrDefault(p => p.PilotId == flight.PilotId);
+                    if (pilot != null)
+                    {
+                        pilot.FlightHours += flight.FlightDuration;
+                        pilot.IsAvailable = true;   // Pilot is free after flight departs
+                    }
+
+                    Console.WriteLine($"Flight {flight.FlightCode} marked as Departed.");
+                    if (pilot != null)
+                        Console.WriteLine($"Pilot {pilot.PilotName} updated — Total hours: {pilot.FlightHours}");
+                }  //Done
 
                 static void CancelFlight()
                 {
@@ -422,7 +462,7 @@ namespace FlightManagementSystem
                     {
                         Console.WriteLine("Error: Flight is already cancelled.");
                         return;
-                }
+                    }
 
                     // Cancel all confirmed bookings on this flight
                     var affectedBookings = context.Bookings
