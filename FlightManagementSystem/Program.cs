@@ -396,8 +396,53 @@ namespace FlightManagementSystem
 
                 static void CancelFlight()
                 {
+                    Console.WriteLine("Cancel a Flight: ");
 
+                    int flightId;
+                    while (true)
+                    {
+                        Console.Write("Enter Flight ID to cancel: ");
+                        if (int.TryParse(Console.ReadLine(), out flightId)) break;
+                    }
+
+                    Flight flight = context.Flights.FirstOrDefault(f => f.FlightId == flightId);
+                    if (flight == null)
+                    {
+                        Console.WriteLine("Error: Flight not found.");
+                        return;
+                    }
+
+                    if (flight.Status == "Departed")
+                    {
+                        Console.WriteLine("Error: Cannot cancel a flight that has already departed.");
+                        return;
+                    }
+
+                    if (flight.Status == "Cancelled")
+                    {
+                        Console.WriteLine("Error: Flight is already cancelled.");
+                        return;
                 }
+
+                    // Cancel all confirmed bookings on this flight
+                    var affectedBookings = context.Bookings
+                        .Where(b => b.FlightId == flightId && b.Status == "Confirmed")
+                        .ToList();
+
+                    affectedBookings.ForEach(b => b.Status = "Cancelled");
+
+                    // Free the pilot
+                    Pilot pilot = context.Pilots.FirstOrDefault(p => p.PilotId == flight.PilotId);
+                    if (pilot != null) pilot.IsAvailable = true;
+
+                    // Cancel the flight
+                    flight.Status = "Cancelled";
+
+                    Console.WriteLine($"Flight {flight.FlightCode} cancelled.");
+                    Console.WriteLine($"  Bookings affected and cancelled: {affectedBookings.Count}");
+                    if (pilot != null)
+                        Console.WriteLine($"Pilot {pilot.PilotName} is now available.");
+                }  //Done
 
                 static void PassengerHistory()
                 {
