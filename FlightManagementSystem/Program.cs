@@ -8,15 +8,15 @@ namespace FlightManagementSystem
         // System Stoarge (The actual storage in the memory for all the lists)
         public static FlightContext context = new FlightContext
         {
-            Passengers = new List<Passenger>(),
+            passengers = new List<Passenger>(),
 
-            Pilots = new List<Pilot>(),
+            pilots = new List<Pilot>(),
 
-            Aircrafts = new List<Aircraft>(),
+            aircrafts = new List<Aircraft>(),
 
-            Flights = new List<Flight>(),
+            flights = new List<Flight>(),
 
-            Bookings = new List<Booking>()
+            bookings = new List<Booking>()
         };
 
         static void Main(string[] args)
@@ -111,7 +111,7 @@ namespace FlightManagementSystem
                     string passport = Console.ReadLine().Trim();
 
                     // Passport must be unique
-                    if (context.Passengers.Any(p => p.PassportNumber == passport))
+                    if (context.passengers.Any(p => p.passportNumber == passport))
                     {
                         Console.WriteLine("Error: A passenger with this passport number already exists.");
                         return;
@@ -121,9 +121,9 @@ namespace FlightManagementSystem
                     string nationality = Console.ReadLine().Trim();
 
                     // Auto-generate ID
-                    int PassengerId = context.Passengers.Count + 1;
+                    int PassengerId = context.passengers.Count + 1;
 
-                    context.Passengers.Add(new Passenger(PassengerId, name, email, phone, passport, nationality));
+                    context.passengers.Add(new Passenger(PassengerId, name, email, phone, passport, nationality));
 
                     Console.WriteLine($"Passenger registered successfully! The passenger ID: {PassengerId}");
                 } //Done
@@ -143,8 +143,8 @@ namespace FlightManagementSystem
                         Console.WriteLine("Error: Enter a valid positive number.");
                     }
 
-                    int newId = context.Aircrafts.Count + 1;
-                    context.Aircrafts.Add(new Aircraft(newId, model, seats));
+                    int newId = context.aircrafts.Count + 1;
+                    context.aircrafts.Add(new Aircraft(newId, model, seats));
 
                     Console.WriteLine($" Aircraft added! Assigned ID: {newId} | Model: {model} | Seats: {seats} | Status: Operational");
                 } //Done
@@ -163,14 +163,14 @@ namespace FlightManagementSystem
                     string license = Console.ReadLine().Trim();
 
                     // License must be unique
-                    if (context.Pilots.Any(p => p.LicenseNumber == license))
+                    if (context.pilots.Any(p => p.licenseNumber == license))
                     {
                         Console.WriteLine("Error: A pilot with this license number already exists.");
                         return;
                     }
 
-                    int newId = context.Pilots.Count + 1;
-                    context.Pilots.Add(new Pilot(newId, name, phone, license));
+                    int newId = context.pilots.Count + 1;
+                    context.pilots.Add(new Pilot(newId, name, phone, license));
 
                     Console.WriteLine($" Pilot registered! Assigned ID: {newId}");
                 } //Done
@@ -179,13 +179,13 @@ namespace FlightManagementSystem
                 {
                     Console.WriteLine("All Flights: ");
 
-                    if (context.Flights.Count == 0)
+                    if (context.flights.Count == 0)
                     {
                         Console.WriteLine("No flights scheduled yet.");
                         return;
                     }
 
-                    context.Flights.ForEach(f => f.Display());
+                    context.flights.ForEach(f => f.Display());
                 } //Done
 
                 static void ScheduleFlight()
@@ -193,7 +193,7 @@ namespace FlightManagementSystem
                     Console.WriteLine(" Schedule a Flight: ");
 
                     // Show operational aircraft
-                    var opAircrafts = context.Aircrafts.Where(a => a.IsOperational).ToList();
+                    var opAircrafts = context.aircrafts.Where(a => a.isOperational).ToList();
                     if (opAircrafts.Count == 0)
                     {
                         Console.WriteLine("No operational aircraft available.");
@@ -208,7 +208,7 @@ namespace FlightManagementSystem
                         Console.Write("Enter Aircraft ID: ");
                         if (int.TryParse(Console.ReadLine(), out aircraftId)) break;
                     }
-                    Aircraft aircraft = context.Aircrafts.FirstOrDefault(a => a.AircraftId == aircraftId && a.IsOperational);
+                    Aircraft aircraft = context.aircrafts.FirstOrDefault(a => a.aircraftId == aircraftId && a.isOperational);
                     if (aircraft == null)
                     {
                         Console.WriteLine("Error: Aircraft not found or not operational.");
@@ -216,7 +216,7 @@ namespace FlightManagementSystem
                     }
 
                     // Show available pilots
-                    var availPilots = context.Pilots.Where(p => p.IsAvailable).ToList();
+                    var availPilots = context.pilots.Where(p => p.isAvailable).ToList();
                     if (availPilots.Count == 0)
                     {
                         Console.WriteLine("No available pilots.");
@@ -231,7 +231,7 @@ namespace FlightManagementSystem
                         Console.Write("Enter Pilot ID: ");
                         if (int.TryParse(Console.ReadLine(), out pilotId)) break;
                     }
-                    Pilot pilot = context.Pilots.FirstOrDefault(p => p.PilotId == pilotId && p.IsAvailable);
+                    Pilot pilot = context.pilots.FirstOrDefault(p => p.pilotId == pilotId && p.isAvailable);
                     if (pilot == null)
                     {
                         Console.WriteLine("Error: Pilot not found or not available.");
@@ -267,16 +267,16 @@ namespace FlightManagementSystem
                     }
 
                     // Auto-generate flight ID and code
-                    int newId = context.Flights.Count + 1;
+                    int newId = context.flights.Count + 1;
                     string flightCode = $"OA-{200 + newId}";   // e.g. OA-201, OA-202 ...
 
-                    context.Flights.Add(new Flight(newId, flightCode, aircraftId, pilotId,
-                                              origin, destination, date, time, price, aircraft.TotalSeats, flightDuration));
+                    context.flights.Add(new Flight(newId, flightCode, aircraftId, pilotId,
+                                              origin, destination, date, time, price, aircraft.totalSeats, flightDuration));
 
                     // Mark pilot as not available
-                    pilot.IsAvailable = false;
+                    pilot.isAvailable = false;
 
-                    Console.WriteLine($"Flight scheduled! Code: {flightCode} | {origin} → {destination} | {date} {time} | Duration: {flightDuration}h | Seats: {aircraft.TotalSeats}");
+                    Console.WriteLine($"Flight scheduled! Code: {flightCode} | {origin} → {destination} | {date} {time} | Duration: {flightDuration}h | Seats: {aircraft.totalSeats}");
                 }  //Done
 
                 static void BookFlight()
@@ -284,13 +284,13 @@ namespace FlightManagementSystem
                     Console.WriteLine("Book a Flight: ");
 
                     // Show passengers
-                    if (context.Passengers.Count == 0)
+                    if (context.passengers.Count == 0)
                     {
                         Console.WriteLine("No passengers registered yet.");
                         return;
                     }
                     Console.WriteLine("Registered Passengers:");
-                    context.Passengers.ForEach(p => Console.WriteLine($"  ID: {p.PassengerId} | {p.PassengerName}"));
+                    context.passengers.ForEach(p => Console.WriteLine($"  ID: {p.passengerId} | {p.passengerName}"));
 
                     int passengerId;
                     while (true)
@@ -298,7 +298,7 @@ namespace FlightManagementSystem
                         Console.Write("Enter Passenger ID: ");
                         if (int.TryParse(Console.ReadLine(), out passengerId)) break;
                     }
-                    Passenger passenger = context.Passengers.FirstOrDefault(p => p.PassengerId == passengerId);
+                    Passenger passenger = context.passengers.FirstOrDefault(p => p.passengerId == passengerId);
                     if (passenger == null)
                     {
                         Console.WriteLine("Error: Passenger not found.");
@@ -309,10 +309,10 @@ namespace FlightManagementSystem
                     string destination = Console.ReadLine().Trim();
 
                     // Show scheduled flights to that destination with seats available
-                    var matchFlights = context.Flights
-                        .Where(f => f.Destination.ToLower() == destination.ToLower()
-                                 && f.Status == "Scheduled"
-                                 && f.AvailableSeats > 0)
+                    var matchFlights = context.flights
+                        .Where(f => f.destination.ToLower() == destination.ToLower()
+                                 && f.status == "Scheduled"
+                                 && f.availableSeats > 0)
                         .ToList();
 
                     if (matchFlights.Count == 0)
@@ -330,7 +330,7 @@ namespace FlightManagementSystem
                         Console.Write("Enter Flight ID: ");
                         if (int.TryParse(Console.ReadLine(), out flightId)) break;
                     }
-                    Flight flight = matchFlights.FirstOrDefault(f => f.FlightId == flightId);
+                    Flight flight = matchFlights.FirstOrDefault(f => f.flightId == flightId);
                     if (flight == null)
                     {
                         Console.WriteLine("Error: Flight not found in the list.");
@@ -338,16 +338,16 @@ namespace FlightManagementSystem
                     }
 
                     // Auto-generate seat number based on bookings on this flight
-                    int seatNum = context.Bookings.Count(b => b.FlightId == flightId) + 1;
+                    int seatNum = context.bookings.Count(b => b.flightId == flightId) + 1;
                     string seatLabel = $"{seatNum}A";
 
-                    int newId = context.Bookings.Count + 1;
-                    context.Bookings.Add(new Booking(newId, passengerId, flightId, seatLabel, flight.TicketPrice));
+                    int newId = context.bookings.Count + 1;
+                    context.bookings.Add(new Booking(newId, passengerId, flightId, seatLabel, flight.ticketPrice));
 
                     // Decrease available seats
-                    flight.AvailableSeats--;
+                    flight.availableSeats--;
 
-                    Console.WriteLine($"Booking confirmed! BookingID: {newId} | Seat: {seatLabel} | Price: OMR {flight.TicketPrice:F2}");
+                    Console.WriteLine($"Booking confirmed! BookingID: {newId} | Seat: {seatLabel} | Price: OMR {flight.ticketPrice:F2}");
                 }  //Done 
 
                 static void CancelBooking()
@@ -361,30 +361,30 @@ namespace FlightManagementSystem
                         if (int.TryParse(Console.ReadLine(), out bookingId)) break;
                     }
 
-                    Booking booking = context.Bookings.FirstOrDefault(b => b.BookingId == bookingId);
+                    Booking booking = context.bookings.FirstOrDefault(b => b.bookingId == bookingId);
                     if (booking == null)
                     {
                         Console.WriteLine("Error: Booking not found.");
                         return;
                     }
 
-                    if (booking.Status == "Cancelled")
+                    if (booking.status == "Cancelled")
                     {
                         Console.WriteLine("Error: Booking is already cancelled.");
                         return;
                     }
 
                     // Find the linked flight
-                    Flight flight = context.Flights.FirstOrDefault(f => f.FlightId == booking.FlightId);
-                    if (flight != null && flight.Status == "Departed")
+                    Flight flight = context.flights.FirstOrDefault(f => f.flightId == booking.flightId);
+                    if (flight != null && flight.status == "Departed")
                     {
                         Console.WriteLine("Error: Cannot cancel a booking on a departed flight.");
                         return;
                     }
 
                     // Cancel booking and restore seat
-                    booking.Status = "Cancelled";
-                    if (flight != null) flight.AvailableSeats++;
+                    booking.status = "Cancelled";
+                    if (flight != null) flight.availableSeats++;
 
                     Console.WriteLine($"Booking {bookingId} cancelled! Seat returned to flight.");
                 }  //Done
@@ -395,7 +395,7 @@ namespace FlightManagementSystem
                     Console.WriteLine("Depart a Flight: ");
 
                     // Show scheduled flights only
-                    var scheduled = context.Flights.Where(f => f.Status == "Scheduled").ToList();
+                    var scheduled = context.flights.Where(f => f.status == "Scheduled").ToList();
                     if (scheduled.Count == 0)
                     {
                         Console.WriteLine("No scheduled flights available.");
@@ -411,7 +411,7 @@ namespace FlightManagementSystem
                         if (int.TryParse(Console.ReadLine(), out flightId)) break;
                     }
 
-                    Flight flight = context.Flights.FirstOrDefault(f => f.FlightId == flightId && f.Status == "Scheduled");
+                    Flight flight = context.flights.FirstOrDefault(f => f.flightId == flightId && f.status == "Scheduled");
                     if (flight == null)
                     {
                         Console.WriteLine("Error: Flight not found or not in Scheduled status.");
@@ -419,19 +419,19 @@ namespace FlightManagementSystem
                     }
 
                     // Update flight status
-                    flight.Status = "Departed";
+                    flight.status = "Departed";
 
                     // Update pilot hours using FlightDuration stored in the flight object
-                    Pilot pilot = context.Pilots.FirstOrDefault(p => p.PilotId == flight.PilotId);
+                    Pilot pilot = context.pilots.FirstOrDefault(p => p.pilotId == flight.pilotId);
                     if (pilot != null)
                     {
-                        pilot.FlightHours += flight.FlightDuration;
-                        pilot.IsAvailable = true;   // Pilot is free after flight departs
+                        pilot.flightHours += flight.flightDuration;
+                        pilot.isAvailable = true;   // Pilot is free after flight departs
                     }
 
-                    Console.WriteLine($"Flight {flight.FlightCode} marked as Departed.");
+                    Console.WriteLine($"Flight {flight.flightCode} marked as Departed.");
                     if (pilot != null)
-                        Console.WriteLine($"Pilot {pilot.PilotName} updated — Total hours: {pilot.FlightHours}");
+                        Console.WriteLine($"Pilot {pilot.pilotName} updated — Total hours: {pilot.flightHours}");
                 }  //Done
 
                 static void CancelFlight()
@@ -445,43 +445,43 @@ namespace FlightManagementSystem
                         if (int.TryParse(Console.ReadLine(), out flightId)) break;
                     }
 
-                    Flight flight = context.Flights.FirstOrDefault(f => f.FlightId == flightId);
+                    Flight flight = context.flights.FirstOrDefault(f => f.flightId == flightId);
                     if (flight == null)
                     {
                         Console.WriteLine("Error: Flight not found.");
                         return;
                     }
 
-                    if (flight.Status == "Departed")
+                    if (flight.status == "Departed")
                     {
                         Console.WriteLine("Error: Cannot cancel a flight that has already departed.");
                         return;
                     }
 
-                    if (flight.Status == "Cancelled")
+                    if (flight.status == "Cancelled")
                     {
                         Console.WriteLine("Error: Flight is already cancelled.");
                         return;
                     }
 
                     // Cancel all confirmed bookings on this flight
-                    var affectedBookings = context.Bookings
-                        .Where(b => b.FlightId == flightId && b.Status == "Confirmed")
+                    var affectedBookings = context.bookings
+                        .Where(b => b.flightId == flightId && b.status == "Confirmed")
                         .ToList();
 
-                    affectedBookings.ForEach(b => b.Status = "Cancelled");
+                    affectedBookings.ForEach(b => b.status = "Cancelled");
 
                     // Free the pilot
-                    Pilot pilot = context.Pilots.FirstOrDefault(p => p.PilotId == flight.PilotId);
-                    if (pilot != null) pilot.IsAvailable = true;
+                    Pilot pilot = context.pilots.FirstOrDefault(p => p.pilotId == flight.pilotId);
+                    if (pilot != null) pilot.isAvailable = true;
 
                     // Cancel the flight
-                    flight.Status = "Cancelled";
+                    flight.status = "Cancelled";
 
-                    Console.WriteLine($"Flight {flight.FlightCode} cancelled.");
+                    Console.WriteLine($"Flight {flight.flightCode} cancelled.");
                     Console.WriteLine($"  Bookings affected and cancelled: {affectedBookings.Count}");
                     if (pilot != null)
-                        Console.WriteLine($"Pilot {pilot.PilotName} is now available.");
+                        Console.WriteLine($"Pilot {pilot.pilotName} is now available.");
                 }  //Done
 
                 static void PassengerHistory()

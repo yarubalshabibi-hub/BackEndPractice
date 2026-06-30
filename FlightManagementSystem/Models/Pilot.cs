@@ -6,27 +6,27 @@ namespace FlightManagementSystem.Models
 {
     public class Pilot
     {
-        public int PilotId { get; set; }
-        public string PilotName { get; set; }
-        public string PilotPhone { get; set; }
-        public string LicenseNumber { get; set; }
-        public int FlightHours { get; set; }
-        public bool IsAvailable { get; set; }
+        public int pilotId { get; set; }
+        public string pilotName { get; set; }
+        public string pilotPhone { get; set; }
+        public string licenseNumber { get; set; }
+        public int flightHours { get; set; }
+        public bool isAvailable { get; set; }
 
         public Pilot(int pilotId, string pilotName, string pilotPhone, string licenseNumber)
         {
-            PilotId = pilotId;
-            PilotName = pilotName;
-            PilotPhone = pilotPhone;
-            LicenseNumber = licenseNumber;
-            FlightHours = 0;     
-            IsAvailable = true; 
+            pilotId = pilotId;
+            pilotName = pilotName;
+            pilotPhone = pilotPhone;
+            licenseNumber = licenseNumber;
+            flightHours = 0;     
+            isAvailable = true; 
         }
 
         public void Display()
         {
-            string status = IsAvailable ? "Available" : "Assigned";
-            Console.WriteLine($"  ID: {PilotId} | Name: {PilotName} | License: {LicenseNumber} | Hours: {FlightHours} | Status: {status}");
+            string status = isAvailable ? "Available" : "Assigned";
+            Console.WriteLine($"  ID: {pilotId} | Name: {pilotName} | License: {licenseNumber} | Hours: {flightHours} | Status: {status}");
         }
     }
 }

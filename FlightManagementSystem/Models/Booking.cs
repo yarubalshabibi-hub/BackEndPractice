@@ -6,29 +6,29 @@ namespace FlightManagementSystem.Models
 {
     public class Booking
         {
-        public int BookingId { get; set; }
-        public int PassengerId { get; set; }
-        public int FlightId { get; set; }
-        public string SeatNumber { get; set; }
-        public string BookingDate { get; set; }  
-        public decimal TotalPrice { get; set; }  
-        public string Status { get; set; }   
+        public int bookingId { get; set; }
+        public int passengerId { get; set; }
+        public int flightId { get; set; }
+        public string seatNumber { get; set; }
+        public string bookingDate { get; set; }  
+        public decimal totalPrice { get; set; }  
+        public string status { get; set; }   
 
         public Booking(int bookingId, int passengerId, int flightId,
                        string seatNumber, decimal totalPrice)
         {
-            BookingId = bookingId;
-            PassengerId = passengerId;
-            FlightId = flightId;
-            SeatNumber = seatNumber;
-            BookingDate = DateTime.Now.ToString("yyyy-MM-dd");  
-            TotalPrice = totalPrice;
-            Status = "Confirmed";  
+            bookingId = bookingId;
+            passengerId = passengerId;
+            flightId = flightId;
+            seatNumber = seatNumber;
+            bookingDate = DateTime.Now.ToString("yyyy-MM-dd");  
+            totalPrice = totalPrice;
+            status = "Confirmed";  
         }
 
         public void Display()
         {
-            Console.WriteLine($"  BookingID: {BookingId} | PassengerID: {PassengerId} | FlightID: {FlightId} | Seat: {SeatNumber} | Date: {BookingDate} | Price: OMR {TotalPrice:F2} | Status: {Status}");
+            Console.WriteLine($"  BookingID: {bookingId} | PassengerID: {passengerId} | FlightID: {flightId} | Seat: {seatNumber} | Date: {bookingDate} | Price: OMR {totalPrice:F2} | Status: {status}");
         }
     }
 }

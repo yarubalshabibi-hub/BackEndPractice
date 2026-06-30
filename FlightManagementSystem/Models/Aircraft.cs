@@ -6,23 +6,23 @@ namespace FlightManagementSystem.Models
 {
     public class Aircraft
     {
-        public int AircraftId { get; set; }
-        public string Model { get; set; }
-        public int TotalSeats { get; set; }
-        public bool IsOperational { get; set; }
+        public int aircraftId { get; set; }
+        public string model { get; set; }
+        public int totalSeats { get; set; }
+        public bool isOperational { get; set; }
 
         public Aircraft(int aircraftId, string model, int totalSeats)
         {
-            AircraftId = aircraftId;
-            Model = model;
-            TotalSeats = totalSeats;
-            IsOperational = true;
+            aircraftId = aircraftId;
+            model = model;
+            totalSeats = totalSeats;
+            isOperational = true;
         }
 
         public void Display()
         {
-            string status = IsOperational ? "Operational" : "Grounded";
-            Console.WriteLine($"  ID: {AircraftId} | Model: {Model} | Seats: {TotalSeats} | Status: {status}");
+            string status = isOperational ? "Operational" : "Grounded";
+            Console.WriteLine($"  ID: {aircraftId} | Model: {model} | Seats: {totalSeats} | Status: {status}");
         }
     }
 }

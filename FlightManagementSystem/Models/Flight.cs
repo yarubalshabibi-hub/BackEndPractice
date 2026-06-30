@@ -6,40 +6,40 @@ namespace FlightManagementSystem.Models
 {
     public class Flight
     {
-        public int FlightId { get; set; }
-        public string FlightCode { get; set; }   
-        public int AircraftId { get; set; }
-        public int PilotId { get; set; }
-        public string Origin { get; set; }
-        public string Destination { get; set; }
-        public string DepartureDate { get; set; }
-        public string DepartureTime { get; set; }
-        public decimal TicketPrice { get; set; }
-        public int AvailableSeats { get; set; }
-        public int FlightDuration { get; set; }  
-        public string Status { get; set; }   
+        public int flightId { get; set; }
+        public string flightCode { get; set; }   
+        public int aircraftId { get; set; }
+        public int pilotId { get; set; }
+        public string origin { get; set; }
+        public string destination { get; set; }
+        public string departureDate { get; set; }
+        public string departureTime { get; set; }
+        public decimal ticketPrice { get; set; }
+        public int availableSeats { get; set; }
+        public int flightDuration { get; set; }  
+        public string status { get; set; }   
 
         public Flight(int flightId, string flightCode, int aircraftId, int pilotId,
                       string origin, string destination, string departureDate,
                       string departureTime, decimal ticketPrice, int availableSeats, int flightDuration)
         {
-            FlightId = flightId;
-            FlightCode = flightCode;
-            AircraftId = aircraftId;
-            PilotId = pilotId;
-            Origin = origin;
-            Destination = destination;
-            DepartureDate = departureDate;
-            DepartureTime = departureTime;
-            TicketPrice = ticketPrice;
-            AvailableSeats = availableSeats;
-            FlightDuration = flightDuration;
-            Status = "Scheduled";   
+            flightId = flightId;
+            flightCode = flightCode;
+            aircraftId = aircraftId;
+            pilotId = pilotId;
+            origin = origin;
+            destination = destination;
+            departureDate = departureDate;
+            departureTime = departureTime;
+            ticketPrice = ticketPrice;
+            availableSeats = availableSeats;
+            flightDuration = flightDuration;
+            status = "Scheduled";   
         }
 
         public void Display()
         {
-            Console.WriteLine($"  [{FlightCode}] {Origin} → {Destination} | Date: {DepartureDate} {DepartureTime} | Duration: {FlightDuration}h | Seats Left: {AvailableSeats} | Price: OMR {TicketPrice:F2} | Status: {Status}");
+            Console.WriteLine($"  [{flightCode}] {origin} → {destination} | Date: {departureDate} {departureTime} | Duration: {flightDuration}h | Seats Left: {availableSeats} | Price: OMR {ticketPrice:F2} | Status: {status}");
         }
     }
 }

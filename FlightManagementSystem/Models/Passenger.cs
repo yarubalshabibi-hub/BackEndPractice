@@ -6,27 +6,27 @@ namespace FlightManagementSystem.Models
 {
     public class Passenger
     {
-        public int PassengerId { get; set; }
-        public string PassengerName { get; set; }
-        public string PassengerEmail { get; set; }
-        public string PassengerPhone { get; set; }
-        public string PassportNumber { get; set; }
-        public string Nationality { get; set; }
+        public int passengerId { get; set; }
+        public string passengerName { get; set; }
+        public string passengerEmail { get; set; }
+        public string passengerPhone { get; set; }
+        public string passportNumber { get; set; }
+        public string nationality { get; set; }
 
         public Passenger(int passengerId, string passengerName, string passengerEmail,
                          string passengerPhone, string passportNumber, string nationality)
         {
-            PassengerId = passengerId;
-            PassengerName = passengerName;
-            PassengerEmail = passengerEmail;
-            PassengerPhone = passengerPhone;
-            PassportNumber = passportNumber;
-            Nationality = nationality;
+            passengerId = passengerId;
+            passengerName = passengerName;
+            passengerEmail = passengerEmail;
+            passengerPhone = passengerPhone;
+            passportNumber = passportNumber;
+            nationality = nationality;
         }
 
         public void Display()
         {
-            Console.WriteLine($"  ID: {PassengerId} | Name: {PassengerName} | Email: {PassengerEmail} | Phone: {PassengerPhone} | Passport: {PassportNumber} | Nationality: {Nationality}");
+            Console.WriteLine($"  ID: {passengerId} | Name: {passengerName} | Email: {passengerEmail} | Phone: {passengerPhone} | Passport: {passportNumber} | Nationality: {nationality}");
         }
     }
 }

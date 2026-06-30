@@ -7,10 +7,10 @@ namespace FlightManagementSystem
 {
     public class FlightContext
     {
-        public List<Passenger> Passengers { get; set; } 
-        public List<Pilot> Pilots { get; set; } 
-        public List<Aircraft> Aircrafts { get; set; } 
-        public List<Flight> Flights { get; set; } 
-        public List<Booking> Bookings { get; set; } 
+        public List<Passenger> passengers { get; set; } 
+        public List<Pilot> pilots { get; set; } 
+        public List<Aircraft> aircrafts { get; set; } 
+        public List<Flight> flights { get; set; } 
+        public List<Booking> bookings { get; set; } 
     }
 }
