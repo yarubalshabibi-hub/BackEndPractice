@@ -6,35 +6,35 @@ using System.Text;
 
 namespace UniversityManagmentSystem.Moodels
 {
-    internal class Enrollment
+    public class Enrollment
     {
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int EnrollmentId { get; set; }                   // system generated — auto-incremented PK
+        public int enrollmentId { get; set; }                   // system generated — auto-incremented 
 
-        // ── Foreign Key: Student 
+        // Foreign Key: Student 
         [Required]
-        public int StudentId { get; set; }                       // from list — not null
+        public int studentId { get; set; }                       // from list — not null
 
         [ForeignKey("StudentId")]
-        public Student Student { get; set; }                     // navigation — single object (the "1" side)
+        public Student student { get; set; }                     // navigation — single object (the "1" side)
 
-        // ── Foreign Key: Course
+        // Foreign Key: Course
         [Required]
-        public int CourseId { get; set; }                        // from list — not null
+        public int courseId { get; set; }                        // from list — not null
 
         [ForeignKey("CourseId")]
-        public Course Course { get; set; }                       // navigation — single object (the "1" side)
+        public course Course { get; set; }                       // navigation — single object (the "1" side)
 
         [Required]
-        public DateTime EnrollmentDate { get; set; }              // system generated — set to today when enrolling
+        public DateTime enrollmentDate { get; set; }              // system generated — set to today when enrolling
 
         [MaxLength(2)]
-        public string FinalGrade { get; set; }                    // calculated — set later when graded, null until then
+        public string finalGrade { get; set; }                    // calculated — set later when graded, null until then
 
         [Required]
         [MaxLength(20)]
-        public string Status { get; set; } = "In Progress";       // default value — "In Progress" when first created
+        public string status { get; set; } = "In Progress";       // default value — "In Progress" when first created
     }
 }
