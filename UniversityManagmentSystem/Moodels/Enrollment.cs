@@ -13,14 +13,14 @@ namespace UniversityManagmentSystem.Moodels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EnrollmentId { get; set; }                   // system generated — auto-incremented PK
 
-        // ── Foreign Key: Student ──────────────────────────────
+        // ── Foreign Key: Student 
         [Required]
         public int StudentId { get; set; }                       // from list — not null
 
         [ForeignKey("StudentId")]
         public Student Student { get; set; }                     // navigation — single object (the "1" side)
 
-        // ── Foreign Key: Course ───────────────────────────────
+        // ── Foreign Key: Course
         [Required]
         public int CourseId { get; set; }                        // from list — not null
 
