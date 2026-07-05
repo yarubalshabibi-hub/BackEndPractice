@@ -22,9 +22,9 @@ namespace UniversityManagmentSystem.Moodels
 
         // Foreign Key: Course
         [Required]
+        [ForeignKey("Course")]
         public int courseId { get; set; }                        // from list — not null
 
-        [ForeignKey("CourseId")]
         public course Course { get; set; }                       // navigation — single object (the "1" side)
 
         [Required]
