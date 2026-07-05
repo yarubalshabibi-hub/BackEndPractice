@@ -37,7 +37,7 @@ namespace UniversityManagmentSystem.Moodels
         public decimal gpa { get; set; } = 0.0m; // default value (recalculated/calculated over time)
 
         // Navigation property: one student has many enrollments
-        public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>(); // navigation property
+        public List<Enrollment> Enrollments { get; set; } = new List<Enrollment>(); // navigation property
 
     }
 }
