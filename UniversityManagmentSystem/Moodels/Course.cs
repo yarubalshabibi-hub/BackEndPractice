@@ -2,9 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using UniversityManagmentSystem.Moodels;
+using Microsoft.EntityFrameworkCore;
 
 namespace UniversitySystem.Models
 {
+    [Index(nameof(courseCode), IsUnique = true)]
     public class Course
     {
         [Key]
