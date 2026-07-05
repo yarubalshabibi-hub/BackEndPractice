@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace UniversityManagmentSystem.Moodels
 {
+    [Index(nameof(departmentName), IsUnique = true)]
     public class Department
     {
         [Key]
@@ -17,7 +20,7 @@ namespace UniversityManagmentSystem.Moodels
         public string departmentName { get; set; }              // user input — must be unique
 
         [MaxLength(50)]
-        public string building { get; set; }                    // user input — optional
+        public string building? { get; set; }                    // user input — optional
 
         [Required]
         [Column(TypeName = "decimal(12,2)")]
@@ -32,6 +35,6 @@ namespace UniversityManagmentSystem.Moodels
 
         // Navigation Property 
         // One Department offers MANY Courses (1 : M)
-        public List<Course> Courses { get; set; } = new List<Course>();
+        public List<Course> Courses { get; set; } 
     }
 }

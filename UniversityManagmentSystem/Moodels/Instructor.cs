@@ -38,7 +38,7 @@ namespace UniversityManagmentSystem.Moodels
         public string academicTitle { get; set; } // user input, from list (e.g. Professor, Lecturer)
 
         // Navigation property: one instructor teaches many courses
-        public List<Course> Courses { get; set; } = new List<Course>(); // navigation property
+        public List<Course> Courses { get; set; }  // navigation property
 
         // Navigation property: one instructor may be the head of at most one department
         public Department? headOfDepartment { get; set; } // navigation property (inverse of Department.HeadInstructor)
