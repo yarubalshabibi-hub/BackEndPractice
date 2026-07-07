@@ -6,6 +6,7 @@ using System.Text;
 
 namespace E_CommerceSystem.moodels
 {
+
     public class Product
     {
         [Key]
@@ -21,11 +22,11 @@ namespace E_CommerceSystem.moodels
 
         [Required]
         [Column(TypeName = "decimal(10,2)")]
-        [Range(0.01, double.maxValue)]
+        [Range(0.01, double.MaxValue)]
         public decimal price { get; set; }                     // user input — must be > 0
 
         [Required]
-        [Range(0, int.maxValue)]
+        [Range(0, int.MaxValue)]
         public int stockQuantity { get; set; } = 0;            // default value — starts at 0
 
         [MaxLength(300)]

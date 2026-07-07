@@ -24,7 +24,7 @@ namespace E_CommerceSystem.moodels
 
         [Required]
         [Column(TypeName = "decimal(10,2)")]
-        [Range(0, double.maxValue)]
+        [Range(0, double.MaxValue)]
         public decimal totalAmount { get; set; }               // calculated — sum of all OrderItems prices
 
         [Required]

@@ -8,7 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceSystem.moodels
 {
-    [Index(nameof(categoryName), IsUnique = true]
+    [Index(nameof(categoryName), IsUnique = true)]
+
     public class Category
     {
         [Key]
