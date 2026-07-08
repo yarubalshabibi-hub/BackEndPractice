@@ -15,19 +15,21 @@ namespace E_CommerceSystem.moodels
 
         // ── Foreign Key: User ─────────────────────────────────
         [Required]
+        [ForeignKey("user")]
         public int userId { get; set; }                        // from list — not null (total participation)
 
 
-        [ForeignKey("UserId")]
+        
         public User user { get; set; }                         // navigation — single object (many side)
 
 
         // ── Foreign Key: Product ──────────────────────────────
         [Required]
+        [ForeignKey("product")]
         public int productId { get; set; }                     // from list — not null (total participation)
 
 
-        [ForeignKey("ProductId")]
+        
         public Product product { get; set; }                   // navigation — single object (many side)
 
 
@@ -37,7 +39,7 @@ namespace E_CommerceSystem.moodels
 
 
         [MaxLength(1000)]
-        public string comment { get; set; }                    // user input — optional
+        public string? comment { get; set; }                    // user input — optional
 
 
         [Required]

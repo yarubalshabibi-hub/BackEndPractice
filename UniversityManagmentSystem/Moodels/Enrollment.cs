@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using UniversitySystem.Models;
 
 namespace UniversityManagmentSystem.Moodels
 {
@@ -25,7 +26,7 @@ namespace UniversityManagmentSystem.Moodels
         [ForeignKey("Course")]
         public int courseId { get; set; }                        // from list — not null
 
-        public course Course { get; set; }                       // navigation — single object (the "1" side)
+        public Course Course { get; set; }                       // navigation — single object (the "1" side)
 
         [Required]
         public DateTime enrollmentDate { get; set; }              // system generated — set to today when enrolling

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
+using UniversitySystem.Models;
 
 namespace UniversityManagmentSystem.Moodels
 {
-    [Index(nameof(email),IsUnique = true]
+    [Index(nameof(email),IsUnique = true)]
     public class Instructor
     {
         [Key]

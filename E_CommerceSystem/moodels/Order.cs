@@ -14,9 +14,10 @@ namespace E_CommerceSystem.moodels
 
         // ── Foreign Key: User ─────────────────────────────────
         [Required]
+        [ForeignKey("user")]
         public int userId { get; set; }                        // from list — not null (total participation)
 
-        [ForeignKey("UserId")]
+        
         public User user { get; set; }                         // navigation — single object (many side)
 
         [Required]

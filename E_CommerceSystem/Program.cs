@@ -54,6 +54,7 @@ namespace E_CommerceSystem
                             break;
 
                         case "6":
+                            CancelOrder();
                             break;
 
                         case "7":
@@ -374,6 +375,61 @@ namespace E_CommerceSystem
 
                     Console.WriteLine($"Product updated! New price: OMR {product.price:F2} | Available: {product.isAvailable}");
                 }
+
+                static void CancelOrder()
+                {
+                    Console.WriteLine("--- Cancel an Order ---");
+
+                    Console.Write("Enter Order ID to cancel: ");
+                    if
+                       (!int.TryParse(Console.ReadLine(), out int orderId))
+                    {
+                        Console.WriteLine("Invalid.");
+                        return;
+                    }
+
+                    var order = context.Orders.FirstOrDefault(o => o.orderId == orderId);
+                    if
+                       (order == null)
+                    { Console.WriteLine("Error: Order not found.");
+                        return;
+                    }
+
+                    if 
+                       (order.status == "Cancelled")
+                    { Console.WriteLine("Error: Order is already cancelled."); 
+                        return;
+                    }
+
+                    if
+                       (order.status == "Delivered")
+                    { Console.WriteLine("Error: Cannot cancel a delivered order.");
+                        return;
+                    }
+
+                    // Load all OrderItems for this order
+                    var items = context.OrderItems.Where(i => i.orderId == orderId).ToList();
+
+                    // Restore stock for each product
+                    foreach (var item in items)
+                    {
+                        var product = context.Products.FirstOrDefault(p => p.productId == item.productId);
+                        if 
+                            (product != null)
+                        {
+                            product.stockQuantity += item.quantity;  // restore stock
+                        }
+                    }
+
+                    // Update order status
+                    order.status = "Cancelled";
+
+                    context.SaveChanges();                  // UPDATE Order + all Product stocks
+
+                    Console.WriteLine($"Order {orderId} cancelled. Stock restored for {items.Count} product(s).");
+                }
+
+                static void 
             }
         }
     }

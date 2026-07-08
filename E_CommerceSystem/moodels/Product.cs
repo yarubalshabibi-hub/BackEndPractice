@@ -34,9 +34,10 @@ namespace E_CommerceSystem.moodels
 
         // ── Foreign Key: Category ─────────────────────────────
         [Required]
+        [ForeignKey("category")]
         public int categoryId { get; set; }                    // from list — not null (total participation)
 
-        [ForeignKey("CategoryId")]
+        
         public Category category { get; set; }                 // navigation — single object (many side)
 
         [Required]

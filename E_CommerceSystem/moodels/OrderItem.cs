@@ -14,16 +14,16 @@ namespace E_CommerceSystem.moodels
 
         // ── Foreign Key: Order ────────────────────────────────
         [Required]
+        [ForeignKey("order")]
         public int orderId { get; set; }                       // foreign key — links to Order (total)
 
-        [ForeignKey("OrderId")]
+        
         public Order order { get; set; }                       // navigation — single object (many side)
 
         // ── Foreign Key: Product ──────────────────────────────
         [Required]
+        [ForeignKey("product")]
         public int productId { get; set; }                     // foreign key — links to Product
-
-        [ForeignKey("ProductId")]
         public Product product { get; set; }                   // navigation — single object (many side)
 
         // ── Relationship Attribute ────────────────────────────
