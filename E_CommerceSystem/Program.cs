@@ -50,6 +50,7 @@ namespace E_CommerceSystem
                             break;
 
                         case "5":
+                            UpdateProduct();
                             break;
 
                         case "6":
@@ -208,6 +209,7 @@ namespace E_CommerceSystem
 
                     Console.WriteLine($"Product added! Assigned productId: {newProduct.productId}");
                 }
+
                 static void PlaceOrder()
                 {
                     Console.WriteLine("--- Place an Order ---");
@@ -293,7 +295,6 @@ namespace E_CommerceSystem
                     Console.WriteLine($" Order placed! OrderID: {newOrder.orderId} | Total: OMR {total:F2}");
                 }
 
-
                 static void WriteReview()
                 {
                     Console.WriteLine("--- Write a Product Review ---");
@@ -301,18 +302,29 @@ namespace E_CommerceSystem
                     Console.WriteLine("Users:");
                     context.Users.ToList().ForEach(u => Console.WriteLine($"  ID: {u.userId} | {u.fullName}"));
                     Console.Write("Enter User ID: ");
-                    if (!int.TryParse(Console.ReadLine(), out int userId)) { Console.WriteLine("Invalid."); return; }
-                    if (!context.Users.Any(u => u.userId == userId)) { Console.WriteLine("User not found."); return; }
+                    if 
+                      (!int.TryParse(Console.ReadLine(), out int userId)) { Console.WriteLine("Invalid."); 
+                        return; }
+                    if 
+                      (!context.Users.Any(u => u.userId == userId)) { Console.WriteLine("User not found.");
+                        return; }
 
-                    Console.WriteLine("\nProducts:");
-                    context.Products.ToList().ForEach(p => Console.WriteLine($"  ID: {p.productId} | {p.productName}"));
+                    Console.WriteLine("Products:");
+                    context.Products.ToList().ForEach(p => Console.WriteLine($"ID: {p.productId} | {p.productName}"));
                     Console.Write("Enter Product ID: ");
-                    if (!int.TryParse(Console.ReadLine(), out int productId)) { Console.WriteLine("Invalid."); return; }
-                    if (!context.Products.Any(p => p.productId == productId)) { Console.WriteLine("Product not found."); return; }
+                    if
+                      (!int.TryParse(Console.ReadLine(), out int productId)) { Console.WriteLine("Invalid.");
+                      return; }
+
+                    if
+                        (!context.Products.Any(p => p.productId == productId)) { Console.WriteLine("Product not found.");
+                      return; }
 
                     Console.Write("Enter rating (1-5): ");
-                    if (!int.TryParse(Console.ReadLine(), out int rating) || rating < 1 || rating > 5)
-                    { Console.WriteLine("Error: Rating must be 1-5."); return; }
+                    if
+                       (!int.TryParse(Console.ReadLine(), out int rating) || rating < 1 || rating > 5)
+                    { Console.WriteLine("Error: Rating must be 1-5.");
+                      return; }
 
                     Console.Write("Enter comment (optional, press Enter to skip): ");
                     string comment = Console.ReadLine().Trim();
@@ -324,12 +336,43 @@ namespace E_CommerceSystem
                         rating = rating,
                         comment = string.IsNullOrWhiteSpace(comment) ? null : comment,
                         reviewDate = DateTime.Now           // system generated
+                        
                     };
 
                     context.Reviews.Add(review);
                     context.SaveChanges();                  // INSERT into Reviews
 
                     Console.WriteLine($"Review submitted! ReviewID: {review.reviewId}");
+                }
+
+                static void UpdateProduct()
+                {
+                    Console.WriteLine("--- Update Product Price & Availability ---");
+
+                    Console.Write("Enter Product ID to update: ");
+                    if (!int.TryParse(Console.ReadLine(), out int productId)) { Console.WriteLine("Invalid."); return; }
+
+                    // Fetch the tracked entity — EF Core will detect changes automatically
+                    var product = context.Products.FirstOrDefault(p => p.productId == productId);
+                    if (product == null) { Console.WriteLine("Error: Product not found."); return; }
+
+                    Console.WriteLine($"Current price: OMR {product.price:F2} | Available: {product.isAvailable}");
+
+                    Console.Write("Enter new price (OMR): ");
+                    if (!decimal.TryParse(Console.ReadLine(), out decimal newPrice) || newPrice <= 0)
+                    { Console.WriteLine("Error: Invalid price."); return; }
+
+                    Console.Write("Is product available? (Y/N): ");
+                    string input = Console.ReadLine().Trim().ToUpper();
+                    if (input != "Y" && input != "N") { Console.WriteLine("Error: Enter Y or N."); return; }
+
+                    // Update the tracked entity — no need to call Update() explicitly
+                    product.price = newPrice;
+                    product.isAvailable = (input == "Y");
+
+                    context.SaveChanges();                  // EF Core sends UPDATE automatically
+
+                    Console.WriteLine($"Product updated! New price: OMR {product.price:F2} | Available: {product.isAvailable}");
                 }
             }
         }
