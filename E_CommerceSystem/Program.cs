@@ -46,6 +46,7 @@ namespace E_CommerceSystem
                             break;
 
                         case "4":
+                            WriteReview();
                             break;
 
                         case "5":
@@ -228,7 +229,7 @@ namespace E_CommerceSystem
                     Console.Write("Enter payment method (e.g. Credit Card): ");
                     string payment = Console.ReadLine().Trim();
 
-                    // Step 1 — Save Order first to get orderId
+                    // — Save Order first to get orderId
                     var newOrder = new Order
                     {
                         userId = userId,
@@ -265,7 +266,7 @@ namespace E_CommerceSystem
                         if (qty > product.stockQuantity)
                         { Console.WriteLine($"Error: Only {product.stockQuantity} in stock."); continue; }
 
-                        // Step 2 — Create OrderItem (bridge record)
+                        // Create OrderItem (bridge record)
                         var item = new OrderItem
                         {
                             orderId = newOrder.orderId,   // links to the saved order
@@ -276,7 +277,7 @@ namespace E_CommerceSystem
 
                         context.OrderItems.Add(item);       // INSERT into OrderItems
 
-                        // Step 3 — Reduce stock
+                        // Reduce stock
                         product.stockQuantity -= qty;       // UPDATE stockQuantity
 
                         total += item.unitPrice * qty;
@@ -285,11 +286,50 @@ namespace E_CommerceSystem
                         Console.WriteLine($"Added: {product.productName} {qty}");
                     }
 
-                    // Step 4 — Update totalAmount on the order
+                    // Update totalAmount on the order
                     newOrder.totalAmount = total;
                     context.SaveChanges();                  // UPDATE Order totalAmount
 
                     Console.WriteLine($" Order placed! OrderID: {newOrder.orderId} | Total: OMR {total:F2}");
+                }
+
+
+                static void WriteReview()
+                {
+                    Console.WriteLine("--- Write a Product Review ---");
+
+                    Console.WriteLine("Users:");
+                    context.Users.ToList().ForEach(u => Console.WriteLine($"  ID: {u.userId} | {u.fullName}"));
+                    Console.Write("Enter User ID: ");
+                    if (!int.TryParse(Console.ReadLine(), out int userId)) { Console.WriteLine("Invalid."); return; }
+                    if (!context.Users.Any(u => u.userId == userId)) { Console.WriteLine("User not found."); return; }
+
+                    Console.WriteLine("\nProducts:");
+                    context.Products.ToList().ForEach(p => Console.WriteLine($"  ID: {p.productId} | {p.productName}"));
+                    Console.Write("Enter Product ID: ");
+                    if (!int.TryParse(Console.ReadLine(), out int productId)) { Console.WriteLine("Invalid."); return; }
+                    if (!context.Products.Any(p => p.productId == productId)) { Console.WriteLine("Product not found."); return; }
+
+                    Console.Write("Enter rating (1-5): ");
+                    if (!int.TryParse(Console.ReadLine(), out int rating) || rating < 1 || rating > 5)
+                    { Console.WriteLine("Error: Rating must be 1-5."); return; }
+
+                    Console.Write("Enter comment (optional, press Enter to skip): ");
+                    string comment = Console.ReadLine().Trim();
+
+                    var review = new Review
+                    {
+                        userId = userId,
+                        productId = productId,
+                        rating = rating,
+                        comment = string.IsNullOrWhiteSpace(comment) ? null : comment,
+                        reviewDate = DateTime.Now           // system generated
+                    };
+
+                    context.Reviews.Add(review);
+                    context.SaveChanges();                  // INSERT into Reviews
+
+                    Console.WriteLine($"Review submitted! ReviewID: {review.reviewId}");
                 }
             }
         }
