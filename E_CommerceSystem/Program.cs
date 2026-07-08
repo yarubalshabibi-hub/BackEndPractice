@@ -429,7 +429,25 @@ namespace E_CommerceSystem
                     Console.WriteLine($"Order {orderId} cancelled. Stock restored for {items.Count} product(s).");
                 }
 
-                static void 
+                static void DeleteReview()
+                {
+                    Console.WriteLine("--- Delete a Review ---");
+
+                    Console.Write("Enter Review ID to delete: ");
+                    if (!int.TryParse(Console.ReadLine(), out int reviewId)) { Console.WriteLine("Invalid."); return; }
+
+                    var review = context.Reviews.FirstOrDefault(r => r.reviewId == reviewId);
+                    if (review == null) { Console.WriteLine("Error: Review not found."); return; }
+
+                    Console.WriteLine($"Review by UserID {review.userId} | Rating: {review.rating} | \"{review.comment}\"");
+                    Console.Write("Confirm delete? (Y/N): ");
+                    if (Console.ReadLine().Trim().ToUpper() != "Y") { Console.WriteLine("Cancelled."); return; }
+
+                    context.Reviews.Remove(review);
+                    context.SaveChanges();                  // DELETE from Reviews
+
+                    Console.WriteLine($"Review {reviewId} deleted successfully.");
+                }
             }
         }
     }
