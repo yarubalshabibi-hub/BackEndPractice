@@ -31,5 +31,6 @@ namespace E_CommerceSystem.moodels
         [Range(1, 999)]
         public int quantity { get; set; }                      // user input — how many of this product in the order
 
+        public decimal unitPrice { get; set; }
     }
 }
