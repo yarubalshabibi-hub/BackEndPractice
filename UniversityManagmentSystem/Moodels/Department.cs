@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
+using UniversitySystem.Models;
 
 
 namespace UniversityManagmentSystem.Moodels
@@ -12,7 +13,7 @@ namespace UniversityManagmentSystem.Moodels
     public class Department
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int departmentId { get; set; }                  // system generated — auto-incremented PK
 
         [Required]
@@ -20,7 +21,7 @@ namespace UniversityManagmentSystem.Moodels
         public string departmentName { get; set; }              // user input — must be unique
 
         [MaxLength(50)]
-        public string building? { get; set; }                    // user input — optional
+        public string? building { get; set; }                    // user input — optional
 
         [Required]
         [Column(TypeName = "decimal(12,2)")]

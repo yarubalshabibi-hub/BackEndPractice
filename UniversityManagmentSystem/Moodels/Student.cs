@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UniversityManagmentSystem.Moodels
 {
-    [Index(nameof(email), IsUnique = true]
+    [Index(nameof(email), IsUnique = true)]
     public class Student
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int studentId { get; set; } // system generated
 
         [Required]
@@ -32,7 +32,7 @@ namespace UniversityManagmentSystem.Moodels
         [Range(2000, 2030)]
         public int enrollmentYear { get; set; } // user input
 
-        [Column(typeName = "decimal(3,2)")]
+        [Column(TypeName = "decimal(3,2)")]
         [Range(0.0, 4.0)]
         public decimal gpa { get; set; } = 0.0m; // default value (recalculated/calculated over time)
 

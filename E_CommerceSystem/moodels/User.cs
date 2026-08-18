@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceSystem.moodels
 {
-    [Index(nameof(email), IsUnique = true]
+    [Index(nameof(email), IsUnique = true)]
 
     public class User
     {

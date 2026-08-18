@@ -14,9 +14,10 @@ namespace E_CommerceSystem.moodels
 
         // ── Foreign Key: User ─────────────────────────────────
         [Required]
+        [ForeignKey("user")]
         public int userId { get; set; }                        // from list — not null (total participation)
 
-        [ForeignKey("UserId")]
+        
         public User user { get; set; }                         // navigation — single object (many side)
 
         [Required]
@@ -24,7 +25,7 @@ namespace E_CommerceSystem.moodels
 
         [Required]
         [Column(TypeName = "decimal(10,2)")]
-        [Range(0, double.maxValue)]
+        [Range(0, double.MaxValue)]
         public decimal totalAmount { get; set; }               // calculated — sum of all OrderItems prices
 
         [Required]
